@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Puneeth | Web Designer & Web App Developer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- THREE.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body class="dark">
+
+    <header>
+        <h1 class="logo">Puneeth Shivaraj<span>.</span></h1>
+        <button id="themeToggle"><i class="fas fa-moon"></i></button>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <canvas id="heroCanvas"></canvas>
+        <div class="hero-content">
+            <h2>I Build <span>Premium Websites</span><br> & <span>Smart Web Applications</span></h2>
+            <p>
+                Helping businesses grow online with modern design, custom systems
+                and performance-driven development.
+            </p>
+            <div class="hero-buttons">
+                <a href="#contact" class="glow-btn">Free Consultation</a>
+                <a href="#portfolio" class="outline-btn">View Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section reveal">
+        <h3>About Me</h3>
+        <p class="center">
+            I’m <b>Puneeth</b>, a freelance web designer & web application developer based in India.
+            I work with businesses, startups and service providers to create professional websites
+            and custom software that generate leads and simplify operations.
+        </p>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section cards reveal">
+        <div class="card">
+            <i class="fas fa-globe glow"></i>
+            <h4>Website Design</h4>
+            <p>Modern business websites, landing pages and WordPress builds.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-code glow"></i>
+            <h4>Web Applications</h4>
+            <p>CRM systems, admin panels and custom dashboards.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-tools glow"></i>
+            <h4>Maintenance</h4>
+            <p>Updates, security, hosting support and performance tuning.</p>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="section reveal">
+        <h3>Selected Projects</h3>
+
+        <div class="project">
+            <h4>Restaurant Website</h4>
+            <p><b>Problem:</b> No online presence</p>
+            <p><b>Solution:</b> Mobile-first website with WhatsApp ordering</p>
+            <p><b>Result:</b> Increased customer enquiries</p>
+        </div>
+
+        <div class="project">
+            <h4>Real Estate Website</h4>
+            <p><b>Problem:</b> Low lead conversion</p>
+            <p><b>Solution:</b> Modern UI + enquiry forms</p>
+            <p><b>Result:</b> Better quality leads</p>
+        </div>
+    </section>
+
+    <!-- CLIENT DEMO TEMPLATES -->
+    <section class="section cards reveal">
+        <div class="card">
+            <i class="fas fa-hospital glow"></i>
+            <h4>Clinic Website</h4>
+            <p>Appointment booking, service pages, WhatsApp integration.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-shopping-cart glow"></i>
+            <h4>E-Commerce Website</h4>
+            <p>Product catalog, cart, checkout, payment gateway integration.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-cash-register glow"></i>
+            <h4>Billing & POS Software</h4>
+            <p>Invoices, GST-ready billing, sales reports, POS dashboard.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-warehouse glow"></i>
+            <h4>Inventory Management System</h4>
+            <p>Stock tracking, purchase/sales reports, low-stock alerts.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-industry glow"></i>
+            <h4>Manufacturing Website</h4>
+            <p>Company profile, product catalog & enquiry system.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-school glow"></i>
+            <h4>School Management App</h4>
+            <p>Student records, attendance & admin dashboard.</p>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE ME -->
+    <section class="section reveal">
+        <h3>Why Choose Me</h3>
+        <ul class="list">
+            <li>✔ Clear communication</li>
+            <li>✔ Business-focused solutions</li>
+            <li>✔ On-time delivery</li>
+            <li>✔ Long-term support</li>
+        </ul>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section reveal">
+        <h3>My Process</h3>
+        <div class="process">
+            <span>1. Discussion</span>
+            <span>2. Design</span>
+            <span>3. Development</span>
+            <span>4. Testing</span>
+            <span>5. Launch</span>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="section reveal">
+        <h3>Pricing</h3>
+        <p class="center">
+            Websites start from <b>₹15,000</b><br>
+            Web applications start from <b>₹40,000</b><br>
+            Final cost depends on features.
+        </p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact reveal">
+        <h3>Let’s Work Together</h3>
+        <p>Call or WhatsApp for a free consultation.</p>
+        <a href="tel:+919449313497" class="glow-btn">Call Now</a>
+        <a href="https://wa.me/919449313497" class="outline-btn">WhatsApp</a>
+    </section>
+
+    <footer>
+        <p>© 2026 Puneeth. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
