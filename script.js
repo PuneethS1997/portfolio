@@ -60,3 +60,52 @@ window.addEventListener("resize", () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+
+// GSAP Logic
+const modal = document.getElementById("demoModal");
+const frame = document.getElementById("demoFrame");
+const device = document.getElementById("deviceFrame");
+
+let tl;
+
+function openDemo(el) {
+    frame.src = el.dataset.demo;
+
+    device.className = "device-frame " + (el.dataset.device || "laptop");
+
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+
+    tl = gsap.timeline();
+    tl.fromTo(".demo-box",
+        { y: 80, rotateX: 15, scale: .85, opacity: 0 },
+        { y: 0, rotateX: 0, scale: 1, opacity: 1, duration: .8, ease: "power4.out" }
+    );
+}
+
+function closeDemo() {
+    gsap.to(".demo-box", {
+        y: 60,
+        rotateX: 10,
+        scale: .9,
+        opacity: 0,
+        duration: .4,
+        ease: "power3.in",
+        onComplete: () => {
+            modal.classList.remove("active");
+            frame.src = "";
+            document.body.style.overflow = "";
+        }
+    });
+}
+
+function toggleFullscreen() {
+    const elem = document.querySelector(".demo-box");
+
+    if (!document.fullscreenElement) {
+        elem.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}

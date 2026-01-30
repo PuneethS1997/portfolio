@@ -92,8 +92,8 @@
 
     <!-- CLIENT DEMO TEMPLATES -->
     <section class="section cards reveal">
-        <div class="card">
-            <i class="fas fa-hospital glow"></i>
+        <div class="card demo-card" data-demo="https://careplusclinicbooking.netlify.app/" data-device="laptop"
+            onclick="openDemo(this)"> <i class="fas fa-hospital glow"></i>
             <h4>Clinic Website</h4>
             <p>Appointment booking, service pages, WhatsApp integration.</p>
         </div>
@@ -174,7 +174,35 @@
         <p>© 2026 Puneeth. All Rights Reserved.</p>
     </footer>
 
+
+
+
+    <!-- DEMO MODAL -->
+    <div class="demo-modal" id="demoModal">
+
+        <div class="demo-backdrop" onclick="closeDemo()"></div>
+
+        <div class="demo-box">
+
+            <div class="demo-toolbar">
+                <span class="demo-title">Live Project Demo</span>
+
+                <div class="demo-actions">
+                    <button onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button onclick="closeDemo()">✕</button>
+                </div>
+            </div>
+
+            <div class="device-frame laptop" id="deviceFrame">
+                <iframe id="demoFrame"></iframe>
+            </div>
+
+        </div>
+    </div>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 </body>
 
 </html>
