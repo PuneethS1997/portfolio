@@ -242,4 +242,8 @@ footer {
   .device-frame.mobile {
     width: 100%;
   }
+
+  .device-frame.laptop {
+    padding: 30px 0px 20px;
+  }
 }
