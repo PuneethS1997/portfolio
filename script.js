@@ -67,24 +67,86 @@ const modal = document.getElementById("demoModal");
 const frame = document.getElementById("demoFrame");
 const device = document.getElementById("deviceFrame");
 
-let tl;
+// let tl;
+
+// function openDemo(el) {
+//     frame.src = el.dataset.demo;
+
+//     device.className = "device-frame " + (el.dataset.device || "laptop");
+
+//     modal.classList.add("active");
+//     document.body.style.overflow = "hidden";
+
+//     tl = gsap.timeline();
+//     tl.fromTo(".demo-box",
+//         { y: 80, rotateX: 15, scale: .85, opacity: 0 },
+//         { y: 0, rotateX: 0, scale: 1, opacity: 1, duration: .8, ease: "power4.out" }
+//     );
+// }
+
+let autoSwitchTimeout;
 
 function openDemo(el) {
     frame.src = el.dataset.demo;
 
-    device.className = "device-frame " + (el.dataset.device || "laptop");
+    const initialDevice = el.dataset.device || "laptop";
+    device.className = "device-frame " + initialDevice;
 
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
 
-    tl = gsap.timeline();
-    tl.fromTo(".demo-box",
+    // Entry animation
+    gsap.fromTo(".demo-box",
         { y: 80, rotateX: 15, scale: .85, opacity: 0 },
         { y: 0, rotateX: 0, scale: 1, opacity: 1, duration: .8, ease: "power4.out" }
     );
+
+    // 🔁 AUTO DEVICE TOGGLE (mobile → laptop)
+    if (initialDevice === "mobile") {
+        autoSwitchTimeout = setTimeout(() => {
+            switchDevice("laptop");
+        }, 3000);
+    }
 }
 
+function switchDevice(type) {
+    gsap.timeline()
+        .to("#deviceFrame", {
+            scale: .92,
+            rotateY: 8,
+            duration: .3,
+            ease: "power2.in"
+        })
+        .add(() => {
+            device.className = "device-frame " + type;
+        })
+        .to("#deviceFrame", {
+            scale: 1,
+            rotateY: 0,
+            duration: .5,
+            ease: "power4.out"
+        });
+}
+
+// function closeDemo() {
+//     gsap.to(".demo-box", {
+//         y: 60,
+//         rotateX: 10,
+//         scale: .9,
+//         opacity: 0,
+//         duration: .4,
+//         ease: "power3.in",
+//         onComplete: () => {
+//             modal.classList.remove("active");
+//             frame.src = "";
+//             document.body.style.overflow = "";
+//         }
+//     });
+// }
+
 function closeDemo() {
+    clearTimeout(autoSwitchTimeout);
+
     gsap.to(".demo-box", {
         y: 60,
         rotateX: 10,
@@ -99,6 +161,7 @@ function closeDemo() {
         }
     });
 }
+
 
 function toggleFullscreen() {
     const elem = document.querySelector(".demo-box");

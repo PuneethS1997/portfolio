@@ -92,7 +92,7 @@
 
     <!-- CLIENT DEMO TEMPLATES -->
     <section class="section cards reveal">
-        <div class="card demo-card" data-demo="https://careplusclinicbooking.netlify.app/" data-device="laptop"
+        <div class="card demo-card" data-demo="https://careplusclinicbooking.netlify.app/" data-device="mobile"
             onclick="openDemo(this)"> <i class="fas fa-hospital glow"></i>
             <h4>Clinic Website</h4>
             <p>Appointment booking, service pages, WhatsApp integration.</p>
@@ -180,6 +180,8 @@
     <!-- DEMO MODAL -->
     <div class="demo-modal" id="demoModal">
 
+
+
         <div class="demo-backdrop" onclick="closeDemo()"></div>
 
         <div class="demo-box">
@@ -188,6 +190,11 @@
                 <span class="demo-title">Live Project Demo</span>
 
                 <div class="demo-actions">
+
+                    <!-- Device switch -->
+                    <button onclick="switchDevice('mobile')" title="Mobile view">📱</button>
+                    <button onclick="switchDevice('laptop')" title="Laptop view">💻</button>
+
                     <button onclick="toggleFullscreen()">
                         <i class="fas fa-expand"></i>
                     </button>
