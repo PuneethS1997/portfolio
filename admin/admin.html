@@ -107,9 +107,10 @@
     <!-- 🔐 Redirect if not admin -->
     <script>
         if (localStorage.getItem("isAdmin") !== "true") {
-            window.location.replace("/index.html"); // absolute path prevents flicker
+            window.location.href = "login.html";
         }
     </script>
+
 
     <header>
         <h1>📊 Admin Dashboard</h1>

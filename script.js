@@ -301,3 +301,7 @@ function trackDemoOpen(demoName) {
 
     localStorage.setItem("demoStats", JSON.stringify(demoStats));
 }
+function adminLogout() {
+    localStorage.removeItem("isAdmin");
+    window.location.href = "login.html";
+}
