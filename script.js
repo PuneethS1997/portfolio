@@ -73,12 +73,9 @@ let autoSwitchTimeout;
 
 function openDemo(el) {
     const demoUrl = el.dataset.demo;
-    const demoName = el.querySelector("h4").innerText.trim();
-
     frame.src = demoUrl;
 
-    // ✅ TRACK CORRECTLY
-    trackDemoGA(demoName);         // GA4
+    trackDemoGA(el.querySelector("h4").innerText); // ✅ REAL COUNT
 
     const initialDevice = el.dataset.device || "laptop";
     device.className = "device-frame " + initialDevice;
@@ -86,22 +83,12 @@ function openDemo(el) {
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
 
-    // Entry animation
     gsap.fromTo(".demo-box",
         { y: 80, rotateX: 15, scale: .85, opacity: 0 },
         { y: 0, rotateX: 0, scale: 1, opacity: 1, duration: .8, ease: "power4.out" }
     );
-
-    // 🔁 AUTO DEVICE TOGGLE
-    if (initialDevice === "mobile") {
-        autoSwitchTimeout = setTimeout(() => {
-            switchDevice("laptop");
-        }, 3000);
-    }
-
-    // Demo modal logic...
-    console.log("Opening demo:", demoName);
 }
+
 
 
 function switchDevice(type) {
@@ -204,15 +191,7 @@ function adminLogin() {
     }
 }
 
-// -------------------------
-// data-admin-only links
-// -------------------------
-document.addEventListener("DOMContentLoaded", () => {
-    const isAdmin = localStorage.getItem("isAdmin") === "true";
-    document.querySelectorAll("[data-admin-only]").forEach(el => {
-        el.style.display = isAdmin ? "inline-block" : "none";
-    });
-});
+
 // function adminLogout() {
 //     localStorage.removeItem("isAdmin");
 //     location.reload();
@@ -282,13 +261,13 @@ function trackDemoGA(demoName) {
 }
 
 
-function trackDemoOpen(demoName) {
-    let demoStats = JSON.parse(localStorage.getItem("demoStats")) || {};
+// function trackDemoOpen(demoName) {
+//     let demoStats = JSON.parse(localStorage.getItem("demoStats")) || {};
 
-    demoStats[demoName] = (demoStats[demoName] || 0) + 1;
+//     demoStats[demoName] = (demoStats[demoName] || 0) + 1;
 
-    localStorage.setItem("demoStats", JSON.stringify(demoStats));
-}
+//     localStorage.setItem("demoStats", JSON.stringify(demoStats));
+// }
 function adminLogout() {
     localStorage.removeItem("isAdmin");
     window.location.href = "login.html";
