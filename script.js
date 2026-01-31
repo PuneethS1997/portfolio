@@ -74,6 +74,12 @@ let autoSwitchTimeout;
 function openDemo(el) {
     frame.src = el.dataset.demo;
 
+    const demoUrl = el.dataset.demo;
+
+    frame.src = demoUrl;
+
+    trackDemoView(demoUrl); // 👈 TRACK HERE
+
     const initialDevice = el.dataset.device || "laptop";
     device.className = "device-frame " + initialDevice;
 
@@ -143,3 +149,48 @@ function toggleFullscreen() {
         document.exitFullscreen();
     }
 }
+
+function trackDemoView(demoUrl) {
+    let views = JSON.parse(localStorage.getItem("demoViews")) || {};
+
+    views[demoUrl] = (views[demoUrl] || 0) + 1;
+
+    localStorage.setItem("demoViews", JSON.stringify(views));
+
+    console.log("Demo Views:", views);
+}
+
+function renderAnalytics() {
+    const grid = document.getElementById("analyticsGrid");
+    if (!grid) return;
+
+    const views = JSON.parse(localStorage.getItem("demoViews")) || {};
+    grid.innerHTML = "";
+
+    if (Object.keys(views).length === 0) {
+        grid.innerHTML = "<p style='color:#94a3b8'>No demo views yet.</p>";
+        return;
+    }
+
+    for (const demo in views) {
+        const card = document.createElement("div");
+        card.className = "analytics-card";
+
+        card.innerHTML = `
+      <h4>${demo.replace("https://", "")}</h4>
+      <p>${views[demo]} views</p>
+    `;
+
+        grid.appendChild(card);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", renderAnalytics);
+
+
+if (window.location.hash === "#admin") {
+    document.getElementById("adminAnalytics").style.display = "block";
+    renderAnalytics();
+}
+
+
