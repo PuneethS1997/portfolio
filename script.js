@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("isAdmin") === "true") {
         document
             .querySelectorAll("[data-admin-only]")
-            .forEach(el => el.style.display = "");
+            .forEach(el => el.style.display = isAdmin ? "inline-block" : "none");
 
         // Optional: load admin-only data
         if (typeof renderAnalytics === "function") {
