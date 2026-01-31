@@ -222,18 +222,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 //   Portfolio view (once per visit)
-gtag('event', 'portfolio_view', {
-    page_title: document.title
-});
+// gtag('event', 'portfolio_view', {
+//     page_title: document.title
+// });
 
-function trackDemoGA(demoName) {
-    if (typeof gtag !== "undefined") {
-        gtag("event", "demo_open", {
-            event_category: "Portfolio Demo",
-            event_label: demoName
-        });
-    }
-}
+// function trackDemoGA(demoName) {
+//     if (typeof gtag !== "undefined") {
+//         gtag("event", "demo_open", {
+//             event_category: "Portfolio Demo",
+//             event_label: demoName
+//         });
+//     }
+// }
 
 
 
@@ -275,9 +275,12 @@ function renderViewsChart() {
 //     }
 // });
 
-gtag('event', 'demo_open', {
-    demo_name: 'Clinic Website'
-});
+function trackDemoGA(demoName) {
+    gtag('event', 'demo_open', {
+        demo_name: demoName
+    });
+}
+
 
 function trackDemoOpen(demoName) {
     let demoStats = JSON.parse(localStorage.getItem("demoStats")) || {};
