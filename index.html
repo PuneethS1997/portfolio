@@ -15,6 +15,19 @@
 
     <!-- THREE.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2SWXK9LVR9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-2SWXK9LVR9');
+    </script>
 </head>
 
 <body class="dark">
@@ -22,6 +35,10 @@
     <header>
         <h1 class="logo">Puneeth Shivaraj<span>.</span></h1>
         <button id="themeToggle"><i class="fas fa-moon"></i></button>
+        <a href="./admin/admin.html" data-admin-only>Admin Dashboard</a>
+        <button data-admin-only>Reset Demo Stats</button>
+        <button data-admin-only onclick="adminLogout()">Logout</button>
+
     </header>
 
     <!-- HERO -->
@@ -131,13 +148,7 @@
         </div>
     </section>
 
-    <section class="section analytics " id="adminAnalytics" style="display:none;">
-        <h2>📊 Demo Analytics</h2>
-
-        <div class="analytics-grid" id="analyticsGrid">
-            <!-- JS will inject cards here -->
-        </div>
-    </section>
+   
 
 
     <!-- WHY CHOOSE ME -->
@@ -221,6 +232,8 @@
     </div>
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </body>
 
 </html>

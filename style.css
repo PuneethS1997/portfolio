@@ -248,41 +248,43 @@ footer {
   }
 }
 
-.analytics{
-  margin-top:80px;
-  padding:40px;
-  background:#020617;
-  border-radius:24px;
+.analytics {
+  margin-top: 80px;
+  padding: 40px;
+  background: #020617;
+  border-radius: 24px;
 }
 
-.analytics h2{
-  color:#fff;
-  margin-bottom:24px;
+.analytics h2 {
+  color: #fff;
+  margin-bottom: 24px;
 }
 
-.analytics-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
-.analytics-card{
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:16px;
-  padding:20px;
-  backdrop-filter:blur(10px);
+.analytics-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
 }
 
-.analytics-card h4{
-  color:#c7d2fe;
-  font-size:14px;
-  margin-bottom:8px;
+.analytics-card h4 {
+  color: #c7d2fe;
+  font-size: 14px;
+  margin-bottom: 8px;
 }
 
-.analytics-card p{
-  color:#fff;
-  font-size:28px;
-  font-weight:700;
+.analytics-card p {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
 }
-
+[data-admin-only] {
+  display: none !important;
+}

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard | Portfolio Analytics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: #020617;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .actions button {
+            margin-left: 10px;
+            padding: 8px 14px;
+            background: #1e293b;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .actions button:hover {
+            background: #334155;
+        }
+
+        main {
+            padding: 24px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: #020617;
+            border: 1px solid #1e293b;
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .card p {
+            font-size: 28px;
+            margin: 8px 0 0;
+            font-weight: 600;
+        }
+
+        section {
+            background: #020617;
+            border: 1px solid #1e293b;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        section h2 {
+            margin-top: 0;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 16px;
+            color: #64748b;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>📊 Admin Dashboard</h1>
+        <div class="actions">
+            <!-- <button onclick="resetStats()">Reset Demo Stats</button> -->
+            <button onclick="adminLogout()">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="section analytics" data-admin-only>
+            <h2>📊 Demo Analytics</h2>
+            <div class="analytics-grid" id="analyticsGrid"></div>
+        </section>
+
+
+        <!-- KPI CARDS -->
+        <div class="cards">
+            <div class="card">
+                <h3>Total Portfolio Views</h3>
+                <p id="totalViews">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Demo Opens</h3>
+                <p id="totalDemos">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Most Viewed Demo</h3>
+                <p id="topDemo">—</p>
+            </div>
+        </div>
+
+        <!-- DAILY VIEWS CHART -->
+        <section>
+            <h2>📈 Daily Portfolio Views</h2>
+            <canvas id="viewsChart" height="120"></canvas>
+        </section>
+
+        <!-- DEMO POPULARITY -->
+        <section>
+            <h2>🔥 Demo Popularity</h2>
+            <canvas id="demoChart" height="120"></canvas>
+        </section>
+
+        <section>
+            <h2>🌍 Google Analytics (GA4)</h2>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>Users (GA)</h3>
+                    <p>Check GA Dashboard</p>
+                </div>
+
+                <div class="card">
+                    <h3>Top Country</h3>
+                    <p>India</p>
+                </div>
+
+                <div class="card">
+                    <h3>Devices</h3>
+                    <p>Mobile / Desktop</p>
+                </div>
+            </div>
+
+            <p style="color:#64748b;font-size:13px">
+                Live GA data is available inside Google Analytics dashboard
+            </p>
+        </section>
+
+
+    </main>
+
+    <footer>
+        Admin Analytics · Local + GA Hybrid Tracking
+    </footer>
+
+    <script>
+        // 🔐 Protect admin page
+        if (localStorage.getItem("isAdmin") !== "true") {
+            window.location.href = "index.html";
+        }
+
+        // 📊 Load stats
+        const dailyViews = JSON.parse(localStorage.getItem("dailyViews")) || {};
+        const demoStats = JSON.parse(localStorage.getItem("demoStats")) || {};
+
+        // TOTAL VIEWS
+        const totalViews = Object.values(dailyViews).reduce((a, b) => a + b, 0);
+        document.getElementById("totalViews").innerText = totalViews;
+
+        // TOTAL DEMOS
+        const totalDemos = Object.values(demoStats).reduce((a, b) => a + b, 0);
+        document.getElementById("totalDemos").innerText = totalDemos;
+
+        // TOP DEMO
+        const topDemo = Object.entries(demoStats).sort((a, b) => b[1] - a[1])[0];
+        document.getElementById("topDemo").innerText = topDemo ? topDemo[0] : "—";
+
+        // 📈 Daily Views Chart
+        new Chart(document.getElementById("viewsChart"), {
+            type: "line",
+            data: {
+                labels: Object.keys(dailyViews),
+                datasets: [{
+                    label: "Views",
+                    data: Object.values(dailyViews),
+                    tension: 0.4,
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // 🔥 Demo Popularity Chart
+        new Chart(document.getElementById("demoChart"), {
+            type: "bar",
+            data: {
+                labels: Object.keys(demoStats),
+                datasets: [{
+                    label: "Demo Opens",
+                    data: Object.values(demoStats),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // ♻ Reset stats
+        function resetStats() {
+            if (confirm("Reset all analytics data?")) {
+                localStorage.removeItem("dailyViews");
+                localStorage.removeItem("demoStats");
+                location.reload();
+            }
+        }
+
+        // 🚪 Logout
+        function adminLogout() {
+            localStorage.removeItem("isAdmin");
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+
+</html>

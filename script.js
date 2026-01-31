@@ -72,13 +72,14 @@ const device = document.getElementById("deviceFrame");
 let autoSwitchTimeout;
 
 function openDemo(el) {
-    frame.src = el.dataset.demo;
-
     const demoUrl = el.dataset.demo;
+    const demoName = el.querySelector("h4").innerText.trim();
 
     frame.src = demoUrl;
 
-    trackDemoView(demoUrl); // 👈 TRACK HERE
+    // ✅ TRACK CORRECTLY
+    trackDemoView(demoName);       // LOCAL
+    trackDemoGA(demoName);         // GA4
 
     const initialDevice = el.dataset.device || "laptop";
     device.className = "device-frame " + initialDevice;
@@ -92,13 +93,14 @@ function openDemo(el) {
         { y: 0, rotateX: 0, scale: 1, opacity: 1, duration: .8, ease: "power4.out" }
     );
 
-    // 🔁 AUTO DEVICE TOGGLE (mobile → laptop)
+    // 🔁 AUTO DEVICE TOGGLE
     if (initialDevice === "mobile") {
         autoSwitchTimeout = setTimeout(() => {
             switchDevice("laptop");
         }, 3000);
     }
 }
+
 
 function switchDevice(type) {
     gsap.timeline()
@@ -150,15 +152,14 @@ function toggleFullscreen() {
     }
 }
 
-function trackDemoView(demoUrl) {
-    let views = JSON.parse(localStorage.getItem("demoViews")) || {};
+function trackDemoView(demoName) {
+    let demoStats = JSON.parse(localStorage.getItem("demoStats")) || {};
 
-    views[demoUrl] = (views[demoUrl] || 0) + 1;
+    demoStats[demoName] = (demoStats[demoName] || 0) + 1;
 
-    localStorage.setItem("demoViews", JSON.stringify(views));
-
-    console.log("Demo Views:", views);
+    localStorage.setItem("demoStats", JSON.stringify(demoStats));
 }
+
 
 function renderAnalytics() {
     const grid = document.getElementById("analyticsGrid");
@@ -193,4 +194,100 @@ if (window.location.hash === "#admin") {
     renderAnalytics();
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("isAdmin") === "true") {
+        document
+            .querySelectorAll("[data-admin-only]")
+            .forEach(el => el.style.display = "");
 
+        // Optional: load admin-only data
+        if (typeof renderAnalytics === "function") {
+            renderAnalytics();
+        }
+    }
+});
+function adminLogin(username, password) {
+    if (username === "admin" && password === "admin123") {
+        localStorage.setItem("isAdmin", "true");
+        location.reload();
+    } else {
+        alert("Invalid credentials");
+    }
+}
+function adminLogout() {
+    localStorage.removeItem("isAdmin");
+    location.reload();
+}
+
+//   Track REAL interactions (not just views)
+
+
+//   Portfolio view (once per visit)
+gtag('event', 'portfolio_view', {
+    page_title: document.title
+});
+
+function trackDemoGA(demoName) {
+    gtag('event', 'demo_view', {
+        demo_name: demoName
+    });
+}
+
+function trackDailyView() {
+    const today = new Date().toISOString().slice(0, 10);
+    const data = JSON.parse(localStorage.getItem("dailyViews")) || {};
+
+    data[today] = (data[today] || 0) + 1;
+    localStorage.setItem("dailyViews", JSON.stringify(data));
+}
+
+document.addEventListener("DOMContentLoaded", trackDailyView);
+
+function renderViewsChart() {
+    const ctx = document.getElementById("viewsChart");
+    if (!ctx) return;
+
+    const data = JSON.parse(localStorage.getItem("dailyViews")) || {};
+    const labels = Object.keys(data);
+    const values = Object.values(data);
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Portfolio Views',
+                data: values,
+                tension: 0.4,
+                borderWidth: 2,
+                fill: true
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("isAdmin") === "true") {
+        renderViewsChart();
+    }
+});
+
+gtag('event', 'demo_open', {
+    demo_name: 'Clinic Website'
+});
+
+function trackDemoOpen(demoName) {
+    let demoStats = JSON.parse(localStorage.getItem("demoStats")) || {};
+
+    demoStats[demoName] = (demoStats[demoName] || 0) + 1;
+
+    localStorage.setItem("demoStats", JSON.stringify(demoStats));
+}
