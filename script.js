@@ -172,10 +172,7 @@ function renderAnalytics() {
 document.addEventListener("DOMContentLoaded", renderAnalytics);
 
 
-if (window.location.hash === "#admin") {
-    document.getElementById("adminAnalytics").style.display = "block";
-    renderAnalytics();
-}
+
 
 
 // -------------------------
@@ -205,14 +202,14 @@ function adminLogin() {
 //     page_title: document.title
 // });
 
-// function trackDemoGA(demoName) {
-//     if (typeof gtag !== "undefined") {
-//         gtag("event", "demo_open", {
-//             event_category: "Portfolio Demo",
-//             event_label: demoName
-//         });
-//     }
-// }
+function trackDemoGA(demoName) {
+    if (typeof gtag !== "undefined") {
+        gtag("event", "demo_open", {
+            event_category: "Portfolio Demo",
+            event_label: demoName
+        });
+    }
+}
 
 
 
