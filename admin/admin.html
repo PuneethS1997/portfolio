@@ -181,9 +181,22 @@
 
     <script>
         // 🔐 Protect admin page
-        if (localStorage.getItem("isAdmin") !== "true") {
-            window.location.href = "/index.html";
+        // Only run on admin.html
+        if (window.location.pathname.endsWith("/admin.html") || window.location.pathname.endsWith(
+                "/admin/admin.html")) {
+            if (localStorage.getItem("isAdmin") !== "true") {
+                // Use absolute path to root index
+                window.location.href = "/index.html";
+            }
         }
+
+        const path = window.location.pathname.toLowerCase();
+        if (path.includes("/admin.html") || path.includes("/admin/admin.html")) {
+            if (localStorage.getItem("isAdmin") !== "true") {
+                window.location.href = "/index.html";
+            }
+        }
+
 
         // 📊 Load stats
         const dailyViews = JSON.parse(localStorage.getItem("dailyViews")) || {};
