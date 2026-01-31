@@ -269,3 +269,24 @@ function adminLogout() {
     localStorage.removeItem("isAdmin");
     window.location.href = "login.html";
 }
+gsap.fromTo(
+    ".case-card",
+    {
+        opacity: 0,
+        y: 60
+    },
+    {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.25,
+        ease: "power4.out",
+        scrollTrigger: {
+            trigger: ".case-grid",
+            start: "top 80%",
+            once: true // 🔥 THIS IS THE FIX
+        }
+    }
+);
+
+
