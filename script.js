@@ -99,6 +99,9 @@ function openDemo(el) {
             switchDevice("laptop");
         }, 3000);
     }
+
+    // Demo modal logic...
+    console.log("Opening demo:", demoName);
 }
 
 
@@ -194,26 +197,29 @@ if (window.location.hash === "#admin") {
     renderAnalytics();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (localStorage.getItem("isAdmin") === "true") {
-        document
-            .querySelectorAll("[data-admin-only]")
-            .forEach(el => el.style.display = isAdmin ? "inline-block" : "none");
 
-        // Optional: load admin-only data
-        if (typeof renderAnalytics === "function") {
-            renderAnalytics();
-        }
-    }
-});
-function adminLogin(username, password) {
-    if (username === "admin" && password === "admin123") {
+// -------------------------
+// Admin login for portfolio
+// -------------------------
+function adminLogin() {
+    const pass = prompt("Enter admin password:");
+    if (pass === "admin123") {
         localStorage.setItem("isAdmin", "true");
-        location.reload();
+        window.location.href = "/admin/admin.html";
     } else {
-        alert("Invalid credentials");
+        alert("Wrong password!");
     }
 }
+
+// -------------------------
+// data-admin-only links
+// -------------------------
+document.addEventListener("DOMContentLoaded", () => {
+    const isAdmin = localStorage.getItem("isAdmin") === "true";
+    document.querySelectorAll("[data-admin-only]").forEach(el => {
+        el.style.display = isAdmin ? "inline-block" : "none";
+    });
+});
 function adminLogout() {
     localStorage.removeItem("isAdmin");
     location.reload();
@@ -228,10 +234,14 @@ gtag('event', 'portfolio_view', {
 });
 
 function trackDemoGA(demoName) {
-    gtag('event', 'demo_view', {
-        demo_name: demoName
-    });
+    if (typeof gtag !== "undefined") {
+        gtag("event", "demo_open", {
+            event_category: "Portfolio Demo",
+            event_label: demoName
+        });
+    }
 }
+
 
 function trackDailyView() {
     const today = new Date().toISOString().slice(0, 10);
