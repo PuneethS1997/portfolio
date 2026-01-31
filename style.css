@@ -294,7 +294,7 @@ footer {
   }
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .demo-box {
     height: 92vh;
     border-radius: 18px;
@@ -307,7 +307,7 @@ footer {
   .device-frame {
     padding: 16px;
   }
-}
+} */
 
 .analytics {
   margin-top: 80px;
