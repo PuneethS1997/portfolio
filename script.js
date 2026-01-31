@@ -78,7 +78,6 @@ function openDemo(el) {
     frame.src = demoUrl;
 
     // ✅ TRACK CORRECTLY
-    trackDemoView(demoName);       // LOCAL
     trackDemoGA(demoName);         // GA4
 
     const initialDevice = el.dataset.device || "laptop";
@@ -155,13 +154,7 @@ function toggleFullscreen() {
     }
 }
 
-function trackDemoView(demoName) {
-    let demoStats = JSON.parse(localStorage.getItem("demoStats")) || {};
 
-    demoStats[demoName] = (demoStats[demoName] || 0) + 1;
-
-    localStorage.setItem("demoStats", JSON.stringify(demoStats));
-}
 
 
 function renderAnalytics() {
@@ -220,10 +213,10 @@ document.addEventListener("DOMContentLoaded", () => {
         el.style.display = isAdmin ? "inline-block" : "none";
     });
 });
-function adminLogout() {
-    localStorage.removeItem("isAdmin");
-    location.reload();
-}
+// function adminLogout() {
+//     localStorage.removeItem("isAdmin");
+//     location.reload();
+// }
 
 //   Track REAL interactions (not just views)
 
@@ -243,15 +236,7 @@ function trackDemoGA(demoName) {
 }
 
 
-function trackDailyView() {
-    const today = new Date().toISOString().slice(0, 10);
-    const data = JSON.parse(localStorage.getItem("dailyViews")) || {};
 
-    data[today] = (data[today] || 0) + 1;
-    localStorage.setItem("dailyViews", JSON.stringify(data));
-}
-
-document.addEventListener("DOMContentLoaded", trackDailyView);
 
 function renderViewsChart() {
     const ctx = document.getElementById("viewsChart");
@@ -284,11 +269,11 @@ function renderViewsChart() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (localStorage.getItem("isAdmin") === "true") {
-        renderViewsChart();
-    }
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     if (localStorage.getItem("isAdmin") === "true") {
+//         renderViewsChart();
+//     }
+// });
 
 gtag('event', 'demo_open', {
     demo_name: 'Clinic Website'
